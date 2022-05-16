@@ -16,6 +16,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "pokemon-card": [
+        "dist/pokemon-card/pokemon-card",
+        "dist/pokemon-card"
+      ]
+    },
     "target": "es2017",
     "module": "es2020",
     "lib": [

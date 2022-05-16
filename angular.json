@@ -102,6 +102,37 @@
           }
         }
       }
+    },
+    "pokemon-card": {
+      "projectType": "library",
+      "root": "projects/pokemon-card",
+      "sourceRoot": "projects/pokemon-card/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pokemon-card/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pokemon-card/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pokemon-card/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pokemon-card/src/test.ts",
+            "tsConfig": "projects/pokemon-card/tsconfig.spec.json",
+            "karmaConfig": "projects/pokemon-card/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "Angular-Demo"
