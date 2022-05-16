@@ -5,6 +5,7 @@ import { HomeComponent } from './@components/home/home.component';
 const routes: Routes = [
   { path: '',  redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
+  {path: 'dashboard', loadChildren: () => import('../app/@modules/dashboard/dashboard.module').then(m => m.DashboardModule)}
 ];
 
 @NgModule({

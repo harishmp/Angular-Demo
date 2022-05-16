@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { SidenavComponent } from './@components/sidenav/sidenav.component';
 import { HomeComponent } from './@components/home/home.component';
+import { DashboardModule } from './@modules/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HomeComponent } from './@components/home/home.component';
     MaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
