@@ -8,8 +8,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { SidenavComponent } from './@components/sidenav/sidenav.component';
 import { HomeComponent } from './@components/home/home.component';
-import { DashboardModule } from './@modules/dashboard/dashboard.module';
-import { WishlistModule } from './@modules/wishlist/wishlist.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +20,7 @@ import { WishlistModule } from './@modules/wishlist/wishlist.module';
     MaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

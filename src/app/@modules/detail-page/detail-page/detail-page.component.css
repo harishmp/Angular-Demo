@@ -1,0 +1,36 @@
+.cardbg {
+  background-color: rgb(0 123 255 / 25%);
+}
+
+.header-image {
+  background-size: cover;
+}
+
+.mat-card-header {
+  background-color: white;
+  padding-top: 10px;
+  border-radius: 10px;
+}
+
+.mat-card-title {
+  text-transform: uppercase;
+  color: black;
+}
+
+.mat-card-subtitle {
+  color: black;
+}
+
+.mat-chip.mat-standard-chip {
+  background-color: #ffffff;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+button {
+  width: 100px;
+}
