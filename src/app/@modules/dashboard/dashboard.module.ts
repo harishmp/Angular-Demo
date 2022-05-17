@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { PokemonCardModule } from 'pokemon-card';
-import { DataService } from './services/data.service';
-import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../../@shared/material.module';
+import { DataModule } from '../../@shared/services/data.module';
 
 
 @NgModule({
@@ -20,10 +19,10 @@ import { MaterialModule } from './material.module';
     CommonModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule,
     DashboardRoutingModule,
-    PokemonCardModule
+    PokemonCardModule,
+    DataModule
   ],
-  providers: [DataService]
+  providers: []
 })
 export class DashboardModule { }

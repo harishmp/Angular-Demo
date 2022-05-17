@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { WishlistRoutingModule } from './wishlist-routing.module';
-import { WishlistComponent } from './wishlist.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 import { PokemonCardModule } from 'pokemon-card';
 
 

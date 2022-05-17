@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from './services/data.service';
-import { PokemonDetailbyName, PokemonDetailLocalStorage, PokemonList } from './typed';
+import { DataService } from '../../../@shared/services/data.service';
+import { PokemonDetailbyName, PokemonDetailLocalStorage, PokemonList } from '../../../@shared/typed';
 
 @Component({
   selector: 'app-dashboard',
