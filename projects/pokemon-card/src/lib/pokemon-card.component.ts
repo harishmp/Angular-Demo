@@ -10,6 +10,7 @@ export class PokemonCardComponent implements OnInit {
 
   @Input() dataList!: any[];
   @Input() addedToWishlist!: string;
+  @Input() filterkey!: string;
 
   @Output() onclickEventfirsticon = new EventEmitter();
   @Output() onclickEventsecondicon = new EventEmitter();

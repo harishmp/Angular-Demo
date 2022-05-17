@@ -1,5 +1,14 @@
 <div class="container-fluid" *ngIf="personalData">
+    <div class="row">
+        <app-search
+        (onclickEventSearch)='applySearch($event)'
+        (onclickEventClear)='clearSearch()'
+        (onclickEventFilter)='applyfilter($event)'
+        >
+        </app-search>
+    </div>
     <lib-pokemon-card
+        [filterkey]='filterkey'
         [dataList]='personalData' addedToWishlist='#d3c9c9'
         (onclickEventredirect)='redirecttoDetailPage($event)' (onclickEventfirsticon)='addtoWishlist($event)'
         (onclickEventsecondicon)='deletefromPersonallist($event)'>

@@ -13,6 +13,8 @@ export class DashboardComponent implements OnInit {
   // pokemon-card inputs
   filterkey!: string;
   personalData: any[] = [];
+  result: any[] = [];
+  searchResult: any[] = [];
 
   // pagination
   offset: number = 0;
@@ -31,11 +33,12 @@ export class DashboardComponent implements OnInit {
       });
       listresponse.results.map((item: any) => {
         this.dataService.getPokeApiDetail(item.name).subscribe((detailresponse: any) => { 
-          this.personalData.push(new PokemonDetailbyName( 
+          this.result.push(new PokemonDetailbyName( 
             detailresponse.name,
             detailresponse.id,
             detailresponse.sprites)
           );
+          this.personalData = this.result;
         }, err => console.log('In Error Block---', err._body + ' ' + err.status));
       });
     });
@@ -68,6 +71,34 @@ export class DashboardComponent implements OnInit {
     this.personalData = this.personalData.filter(item => item.id != $event.id);
     localStorage.setItem('personallist', JSON.stringify(this.personalData));
     // this.openSnackBar('Deleted from personal list', 'pizza-party');
+  }
+
+  // Search through API
+  applySearch(searchValue: any) {
+    if(searchValue.length > 0) {
+      this.dataService.getPokeApiDetail(searchValue).subscribe((detailresponse: any) => { 
+        this.searchResult.push(new PokemonDetailbyName( 
+          detailresponse.name,
+          detailresponse.id,
+          detailresponse.sprites)
+        );
+        this.personalData = this.searchResult;
+      },
+      err => {
+        console.log('In Error Block---', err._body + ' ' + err.status);
+      });
+    }
+  }
+
+  // Filter result view handler
+  applyfilter(filterValue: string) {
+    this.filterkey = filterValue;
+  }
+
+  clearSearch(){
+    // this.pageIndex = 0;
+    this.filterkey = '';
+    this.personalData = this.result;
   }
 
 }
