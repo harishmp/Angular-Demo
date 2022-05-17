@@ -1,0 +1,8 @@
+<div class="container-fluid" *ngIf="pokemonWishList">
+    <lib-pokemon-card 
+        [dataList]='pokemonWishList'
+        (onclickEventredirect)='redirecttoDetailPage($event)' 
+        (onclickEventsecondicon)='deletefromPersonallist($event)'>
+    </lib-pokemon-card>
+</div>
+<div class="row card shadow p-3 m-3" *ngIf="!pokemonWishList"><h2 class="m-0">List is empty!!!</h2></div>

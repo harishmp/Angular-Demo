@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   // pokemon-card inputs
   filterkey!: string;
-  personalData: any[] = [];
+  pokemonList: any[] = [];
   result: any[] = [];
   searchResult: any[] = [];
 
@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
             detailresponse.id,
             detailresponse.sprites)
           );
-          this.personalData = this.result;
+          this.pokemonList = this.result;
         }, err => console.log('In Error Block---', err._body + ' ' + err.status));
       });
     });
@@ -67,22 +67,17 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  deletefromPersonallist($event: PokemonDetailLocalStorage) {
-    this.personalData = this.personalData.filter(item => item.id != $event.id);
-    localStorage.setItem('personallist', JSON.stringify(this.personalData));
-    // this.openSnackBar('Deleted from personal list', 'pizza-party');
-  }
-
   // Search through API
   applySearch(searchValue: any) {
     if(searchValue.length > 0) {
+      this.searchResult = [];
       this.dataService.getPokeApiDetail(searchValue).subscribe((detailresponse: any) => { 
         this.searchResult.push(new PokemonDetailbyName( 
           detailresponse.name,
           detailresponse.id,
           detailresponse.sprites)
         );
-        this.personalData = this.searchResult;
+        this.pokemonList = this.searchResult;
       },
       err => {
         console.log('In Error Block---', err._body + ' ' + err.status);
@@ -98,7 +93,7 @@ export class DashboardComponent implements OnInit {
   clearSearch(){
     // this.pageIndex = 0;
     this.filterkey = '';
-    this.personalData = this.result;
+    this.pokemonList = this.result;
   }
 
 }

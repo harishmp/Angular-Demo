@@ -9,6 +9,7 @@ import { MaterialModule } from './material.module';
 import { SidenavComponent } from './@components/sidenav/sidenav.component';
 import { HomeComponent } from './@components/home/home.component';
 import { DashboardModule } from './@modules/dashboard/dashboard.module';
+import { WishlistModule } from './@modules/wishlist/wishlist.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,6 @@ import { DashboardModule } from './@modules/dashboard/dashboard.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

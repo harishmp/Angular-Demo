@@ -9,7 +9,8 @@ export class SidenavComponent implements OnInit {
 
   public pages = [
     {name: 'Home', link:'home', icon: 'home'},
-    {name: 'Dashboard', link:'dashboard', icon: 'computer'}
+    {name: 'Dashboard', link:'dashboard', icon: 'computer'},
+    {name: 'Wishlist', link:'wishlist', icon: 'turned_in'}
   ]
 
   constructor() { }

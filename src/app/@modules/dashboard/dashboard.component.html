@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="personalData">
+<div class="container-fluid" *ngIf="pokemonList">
     <div class="row">
         <app-search
         (onclickEventSearch)='applySearch($event)'
@@ -9,9 +9,10 @@
     </div>
     <lib-pokemon-card
         [filterkey]='filterkey'
-        [dataList]='personalData' addedToWishlist='#d3c9c9'
-        (onclickEventredirect)='redirecttoDetailPage($event)' (onclickEventfirsticon)='addtoWishlist($event)'
-        (onclickEventsecondicon)='deletefromPersonallist($event)'>
+        [dataList]='pokemonList'
+        addedToWishlist='#d3c9c9'
+        (onclickEventredirect)='redirecttoDetailPage($event)'
+        (onclickEventfirsticon)='addtoWishlist($event)'>
     </lib-pokemon-card>
 </div>
-<div class="row card shadow p-3 m-3" *ngIf="!personalData"><h2 class="m-0">List is empty!!!</h2></div>
+<div class="row card shadow p-3 m-3" *ngIf="!pokemonList"><h2 class="m-0">List is empty!!!</h2></div>
