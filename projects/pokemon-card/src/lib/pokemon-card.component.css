@@ -1,0 +1,9 @@
+.white-icon {
+    background-color: white;
+}
+mat-card {
+    max-width: 235px;
+}
+mat-card-actions {
+    min-height: 40px;
+}

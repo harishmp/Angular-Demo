@@ -1,0 +1,19 @@
+<div class="row">
+    <mat-card class="example-card col-md-3 m-2" *ngFor="let data of dataList">
+      <mat-card-header (click)="redirecttoDetailPage(data)" style="cursor: pointer;">
+        <mat-card-title style="margin-bottom: 35px;">{{data.name}}</mat-card-title>
+        <mat-card-subtitle>ID : {{data.id}}</mat-card-subtitle>
+        <span class="spacer"></span>
+        <img [src]="data.sprites" />
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button *ngIf="addedToWishlist" mat-mini-fab matTooltip="Add to Wishlist" class="white-icon" (click)="onclickFirsticon(data)">
+          <mat-icon [style.color]="addedToWishlist">favorite</mat-icon>
+        </button>
+        <button *ngIf="!addedToWishlist" mat-icon-button color="warn" matTooltip="Delete from wishlist" style="float: right;" (click)="onclickSecondicon(data)">
+          <mat-icon >delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
