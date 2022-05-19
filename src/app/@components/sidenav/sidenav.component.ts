@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/@shared/shared.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,9 +15,13 @@ export class SidenavComponent implements OnInit {
     {name: 'change Detection', link:'change-detection', icon: 'edit'}
   ]
 
-  constructor() { }
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit(): void {
+  }
+
+  setTitle(pageName: string) {
+    this.sharedService.setPageTitle(pageName);
   }
 
 }

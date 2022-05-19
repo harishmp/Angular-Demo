@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { pokemonReducer } from './@modules/dashboard/store/pokemon.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from 'src/app/@shared/material.module';
+import { SharedService } from './@shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { MaterialModule } from 'src/app/@shared/material.module';
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument()
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,6 @@
 mat-icon {
-    margin-right: 8px;
+  margin-right: 8px;
+}
+.active {
+  background: #e9f2fb;
 }
