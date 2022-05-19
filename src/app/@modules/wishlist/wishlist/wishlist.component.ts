@@ -15,7 +15,7 @@ export class WishlistComponent implements OnInit {
 
   pokemonWishList$ = this.store.select(selectWishlist);
 
-  constructor(private router: Router, public snackBar: MatSnackBar, private store: Store) { 
+  constructor(private router: Router, public _snackBar: MatSnackBar, private store: Store) { 
   }
 
   ngOnInit(): void { }
@@ -26,7 +26,7 @@ export class WishlistComponent implements OnInit {
 
   deletefromPersonallist($event: PokemonDetailLocalStorage) {
     this.store.dispatch(Remove({ id: $event.id}));
-    // this.openSnackBar('Deleted from personal list', 'pizza-party');
+    this._snackBar.open('Deleted from personal list', 'close', { duration: 2500 });
   }
 
 }

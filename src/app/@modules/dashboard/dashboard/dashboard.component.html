@@ -1,19 +1,19 @@
 <div class="container-fluid" *ngIf="pokemonList">
     <div class="row">
-        <app-search
-        (onclickEventSearch)='applySearch($event)'
-        (onclickEventClear)='clearSearch()'
-        (onclickEventFilter)='applyfilter($event)'
-        >
+        <app-search (onclickEventSearch)='applySearch($event)' (onclickEventClear)='clearSearch()'
+            (onclickEventFilter)='applyfilter($event)'>
         </app-search>
     </div>
-    <lib-pokemon-card
-        [filterkey]='filterkey'
-        [dataList]='pokemonList'
-        addedToWishlist='#d3c9c9'
-        (onclickEventredirect)='redirecttoDetailPage($event)'
-        (onclickEventfirsticon)='addtoWishlist($event)'>
+    <lib-pokemon-card [filterkey]='filterkey' [dataList]='pokemonList' addedToWishlist='#d3c9c9'
+        (onclickEventredirect)='redirecttoDetailPage($event)' (onclickEventfirsticon)='addtoWishlist($event)'>
     </lib-pokemon-card>
+    <div class="row" *ngIf="length > 10">
+        <div class="card shadow col-md-12 p-0 mt-3">
+            <mat-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions" (page)="getServerData($event)">
+            </mat-paginator>
+        </div>
+    </div>
 </div>
 <div class="row card shadow p-3 m-3" *ngIf="!pokemonList || pokemonList?.length == 0">
     <h2 class="m-0">Loading!!!</h2>
