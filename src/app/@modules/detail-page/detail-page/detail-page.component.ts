@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from '../../../@shared/services/data.service';
-import { PokemonDetailbyID, PokemonMoves, PokemonStats } from '../../../@shared/typed';
+import { DataService } from 'src/app/@shared/services/data.service';
+import { PokemonDetailbyID, PokemonMoves, PokemonStats } from 'src/app/@shared/typed';
 
 @Component({
   selector: 'app-detail-page',

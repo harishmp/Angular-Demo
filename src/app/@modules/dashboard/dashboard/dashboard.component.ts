@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../../../@shared/services/data.service';
-import { PokemonDetailbyName, PokemonDetailLocalStorage, PokemonList } from '../../../@shared/typed';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { DataService } from 'src/app/@shared/services/data.service';
+import { PokemonDetailbyName, PokemonDetailLocalStorage, PokemonList } from 'src/app/@shared/typed';
+import { Add } from '../store/pokemon.actions';
+import { selectWishlist } from '../store/pokemon.reducer';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +24,11 @@ export class DashboardComponent implements OnInit {
   offset: number = 0;
   pageSize: number = 10;
 
+  pokemonWishList$ = this.store.select(selectWishlist);
+
   constructor(private router: Router,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private store: Store<{ wishlist: number }>) { }
 
   ngOnInit(): void {
     this.dataService.getPokeApiList(this.pageSize, this.offset).subscribe((listresponse: any) => {  
@@ -48,22 +55,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([`pokemon-detail-page/${data.id}`]);
   }
 
-  addtoWishlist($event: PokemonDetailLocalStorage) {
-    let wishlist = JSON.parse(localStorage.getItem('wishlist') as string);
-    if(wishlist != null){
-      let afterListfilter = wishlist.filter((item: any) => item.id == $event.id);
-      if(afterListfilter.length == 0){
-        wishlist.push($event)
-        localStorage.setItem('wishlist', JSON.stringify(wishlist)); 
+  async addtoWishlist($event: PokemonDetailLocalStorage) {
+    let checkStoreWishlist = await this.pokemonWishList$.pipe(take(1)).toPromise();
+    checkStoreWishlist = checkStoreWishlist.filter((item: any) => item.id == $event.id);
+    if(checkStoreWishlist && checkStoreWishlist.length == 0) {
+        this.store.dispatch(Add({name: $event.name, id: $event.id, sprites: $event.sprites}));
         // this.openSnackBar('Successfully added to wishlist', 'pizza-party');
       } else {
-        // this.openSnackBar('Already added to wishlist', 'pizza-party');
-      }
-    } else {
-      wishlist = [];
-      wishlist.push($event)
-      localStorage.setItem('wishlist', JSON.stringify(wishlist)); 
-      // this.openSnackBar('Successfully added to Wishlist', 'pizza-party');
+      // this.openSnackBar('Already added to wishlist', 'pizza-party');
     }
   }
 

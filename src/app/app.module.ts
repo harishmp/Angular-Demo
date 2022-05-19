@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { SidenavComponent } from './@components/sidenav/sidenav.component';
 import { HomeComponent } from './@components/home/home.component';
+import { StoreModule } from '@ngrx/store';
+import { pokemonReducer } from './@modules/dashboard/store/pokemon.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { HomeComponent } from './@components/home/home.component';
     MaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    StoreModule.forRoot( pokemonReducer ),
+    BrowserAnimationsModule,
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]

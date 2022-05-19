@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { PokemonDetailLocalStorage } from '../typed';
+import { Store } from '@ngrx/store';
+import { PokemonDetailLocalStorage } from 'src/app/@shared/typed';
+import { Remove } from '../../dashboard/store/pokemon.actions';
+import { selectWishlist } from '../../dashboard/store/pokemon.reducer';
 
 @Component({
   selector: 'app-wishlist',
@@ -10,29 +13,19 @@ import { PokemonDetailLocalStorage } from '../typed';
 })
 export class WishlistComponent implements OnInit {
 
-  pokemonWishList: any[] = [];
+  pokemonWishList$ = this.store.select(selectWishlist);
 
-  constructor(private router: Router, public snackBar: MatSnackBar) { 
+  constructor(private router: Router, public snackBar: MatSnackBar, private store: Store) { 
   }
 
-  ngOnInit(): void {
-    let pokemonWishList1 = JSON.parse(localStorage.getItem("personallist") as string);
-    pokemonWishList1.map((item: any) => {
-      this.pokemonWishList.push(new PokemonDetailLocalStorage( 
-        item.name,
-        item.id,
-        item.sprites)
-      );
-    });
-  }
+  ngOnInit(): void { }
 
   redirecttoDetailPage(data: PokemonDetailLocalStorage){
     this.router.navigate([`pokemon-detail-page/${data.id}`]);
   }
 
   deletefromPersonallist($event: PokemonDetailLocalStorage) {
-    this.pokemonWishList = this.pokemonWishList.filter(item => item.id != $event.id);
-    localStorage.setItem('personallist', JSON.stringify(this.pokemonWishList));
+    this.store.dispatch(Remove({ id: $event.id}));
     // this.openSnackBar('Deleted from personal list', 'pizza-party');
   }
 
