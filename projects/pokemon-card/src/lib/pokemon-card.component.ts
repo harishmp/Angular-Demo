@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PokemonDetailLocalStorage } from './typed';
+import { Pokemon } from './typed';
 
 @Component({
   selector: 'lib-pokemon-card',
@@ -8,7 +8,7 @@ import { PokemonDetailLocalStorage } from './typed';
 })
 export class PokemonCardComponent implements OnInit {
 
-  @Input() dataList!: any[];
+  @Input() dataList!: Pokemon[];
   @Input() addedToWishlist!: string;
   @Input() filterkey!: string;
 
@@ -21,15 +21,15 @@ export class PokemonCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onclickFirsticon(data: PokemonDetailLocalStorage) {
+  onclickFirsticon(data: Pokemon) {
     this.onclickEventfirsticon.emit(data);
   }
 
-  onclickSecondicon(data: PokemonDetailLocalStorage) {
+  onclickSecondicon(data: Pokemon) {
     this.onclickEventsecondicon.emit(data);
   }
 
-  redirecttoDetailPage(data: PokemonDetailLocalStorage) {
+  redirecttoDetailPage(data: Pokemon) {
     this.onclickEventredirect.emit(data);
   }
 

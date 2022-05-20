@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { debounceTime, filter, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   searchkey!: string;
   filterkey!: string;
@@ -14,14 +15,21 @@ export class SearchComponent implements OnInit {
   @Output() onclickEventFilter = new EventEmitter();
   @Output() onclickEventClear = new EventEmitter();
 
-  constructor() { }
+  userQuestionUpdate = new Subject<string>();
+  subscription: Subscription;
 
-  ngOnInit(): void {
+  constructor() {
+    // Debounce search.
+    this.subscription = this.userQuestionUpdate.pipe(
+      filter(res => res.length > 3),
+      debounceTime(2000))
+      .subscribe(value => {
+        this.searchkey = value;
+        this.onclickEventSearch.emit(this.searchkey);
+      });
   }
 
-  // Search through API
-  applySearch(searchValue: string) {
-    this.onclickEventSearch.emit(searchValue);
+  ngOnInit(): void {
   }
 
   // Filter result view handler
@@ -32,6 +40,10 @@ export class SearchComponent implements OnInit {
   clearSearch(){
     this.searchkey = '';
     this.onclickEventClear.emit();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

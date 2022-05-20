@@ -7,7 +7,6 @@ import { take } from 'rxjs';
 import { DataService } from 'src/app/@shared/services/data.service';
 import {
   PokemonDetailbyName,
-  PokemonDetailLocalStorage,
   PokemonList,
 } from 'src/app/@shared/typed';
 import { Add } from '../store/pokemon.actions';
@@ -21,17 +20,21 @@ import { selectWishlist } from '../store/pokemon.reducer';
 export class DashboardComponent implements OnInit {
   // pokemon-card inputs
   filterkey!: string;
-  pokemonList: any[] = [];
-  result: any[] = [];
-  searchResult: any[] = [];
+  pokemonList: PokemonDetailbyName[] = [];
+  color = '#d3c9c9';
+
+  result: PokemonDetailbyName[] = [];
+  pokemonSearchResult: PokemonDetailbyName[] = [];
+  pokemonGetAllResult: PokemonDetailbyName[] = [];
+  pokemonListLength = 0;
+  errorMessage!: string;
 
   // pagination
   offset: number = 0;
-  pageSize: number = 10;
-
   length!: number;
-  pageSizeOptions: number[] = [10, 20, 50, 100];
   pageIndex!: number;
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
 
   pokemonWishList$ = this.store.select(selectWishlist);
 
@@ -54,84 +57,93 @@ export class DashboardComponent implements OnInit {
           return new PokemonList(item.name, item.url);
         });
         listresponse.results.map((item: any) => {
-          this.dataService.getPokeApiDetail(item.name).subscribe(
-            (detailresponse: any) => {
-              this.result.push(
-                new PokemonDetailbyName(
-                  detailresponse.name,
-                  detailresponse.id,
-                  detailresponse.sprites
-                )
-              );
-              this.pokemonList = [];
-              this.pokemonList = this.result;
-              this._snackBar.open('Data Initialized Successfully', 'close', {
-                duration: 2500,
-              });
-            },
-            (err) =>
-              console.log('In Error Block---', err._body + ' ' + err.status)
-          );
+          this.pokemonGetAllResult = [];
+          this.result = [];
+          this.pokemonGetAllResult = this.getPokemonInDetail(item.name);
+          this.pokemonList = this.pokemonGetAllResult;
         });
-        this.length = listresponse.count;
+        this.pokemonListLength = listresponse.count;
+        this.length = this.pokemonListLength;
       });
   }
 
-  redirecttoDetailPage(data: PokemonDetailLocalStorage) {
+  applySearch(searchValue: any) {
+    this.length = 0;
+    this.result = [];
+    this.pokemonSearchResult = [];
+    this.pokemonSearchResult = this.getPokemonInDetail(searchValue);
+    this.pokemonList = this.pokemonSearchResult;
+  }
+
+  getPokemonInDetail(name: string): PokemonDetailbyName[] {
+    this.dataService.getPokeApiDetail(name).subscribe(
+      async (detailresponse: any) => {
+        let checkStoreWishlist = await this.pokemonWishList$
+          .pipe(take(1))
+          .toPromise();
+          checkStoreWishlist = checkStoreWishlist.some((item: any) => item.id === detailresponse.id);
+        this.result.push(
+          new PokemonDetailbyName(
+            detailresponse.name,
+            detailresponse.id,
+            detailresponse.sprites,
+            this.color = checkStoreWishlist ? 'deeppink' : '#d3c9c9'
+          )
+        );
+        this.result = this.result.sort((a, b) => a.id - b.id);
+      },
+      (err) => {
+        this.pokemonList = [];
+        this.length = 0;
+        this.errorMessage = `${err.error}: Please enter a valid name`;
+        this.openSnackBar(err.error);
+        return;
+      }
+    );
+    this.openSnackBar('Data found Successfully!!!');
+    return this.result;
+  }
+
+  redirecttoDetailPage(data: PokemonDetailbyName) {
     this.router.navigate([`pokemon-detail-page/${data.id}`]);
   }
 
-  async addtoWishlist($event: PokemonDetailLocalStorage) {
+  async addtoWishlist($event: PokemonDetailbyName) {
+    this.checkWishlistStore($event.id).then(res => {
+      this.store.dispatch(
+        Add({ name: $event.name, id: $event.id, sprites: $event.sprites })
+      );
+      this.checkWishlistStore($event.id).then(res => {
+        this.pokemonList.forEach((item: any) => {
+          if (item.id === res.id) {
+            item.color = 'deeppink'
+          }
+        });
+      });
+      this._snackBar.open('Successfully added to wishlist', 'close', {
+        duration: 2500,
+      });
+    });
+  }
+
+  async checkWishlistStore(id: number) {
     let checkStoreWishlist = await this.pokemonWishList$
       .pipe(take(1))
       .toPromise();
     checkStoreWishlist = checkStoreWishlist.filter(
-      (item: any) => item.id == $event.id
+      (item: PokemonDetailbyName) => item.id == id
     );
-    if (checkStoreWishlist && checkStoreWishlist.length == 0) {
-      this.store.dispatch(
-        Add({ name: $event.name, id: $event.id, sprites: $event.sprites })
-      );
-      this._snackBar.open('Successfully added to wishlist', 'close', {
-        duration: 2500,
-      });
-    } else {
-      this._snackBar.open('Already added to wishlist', 'close', {
-        duration: 2500,
-      });
-    }
+    return checkStoreWishlist[0];
   }
 
   // pagination event
   getServerData(event?: PageEvent) {
     this.pageIndex = event?.pageIndex as number;
     this.pageSize = event?.pageSize as number;
-    this.offset = (event?.pageIndex as number) * 10;
+    this.offset = (event?.pageIndex as number) * this.pageSize;
     this.result = [];
     this.pokemonList = [];
     this.getPokemonList(this.pageSize, this.offset);
-  }
-
-  // Search through API
-  applySearch(searchValue: any) {
-    if (searchValue.length > 0) {
-      this.searchResult = [];
-      this.dataService.getPokeApiDetail(searchValue).subscribe(
-        (detailresponse: any) => {
-          this.searchResult.push(
-            new PokemonDetailbyName(
-              detailresponse.name,
-              detailresponse.id,
-              detailresponse.sprites
-            )
-          );
-          this.pokemonList = this.searchResult;
-        },
-        (err) => {
-          console.log('In Error Block---', err._body + ' ' + err.status);
-        }
-      );
-    }
   }
 
   // Filter result view handler
@@ -140,8 +152,15 @@ export class DashboardComponent implements OnInit {
   }
 
   clearSearch() {
-    // this.pageIndex = 0;
+    this.length = this.pokemonListLength;
+    this.pokemonSearchResult = [];
     this.filterkey = '';
-    this.pokemonList = this.result;
+    this.pokemonList = this.pokemonGetAllResult;
+  }
+
+  openSnackBar(text: string) {
+    this._snackBar.open(text, 'close', {
+      duration: 2500,
+    });
   }
 }

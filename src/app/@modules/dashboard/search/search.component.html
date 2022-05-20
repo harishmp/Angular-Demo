@@ -1,9 +1,10 @@
-<div class="row">
+<div class="row pt-2 pb-1">
     <div class="col-md-6" *ngIf="!filterkey">
         <mat-form-field appearance="outline">
             <mat-label>Search Pokeman by fullname (Api call)</mat-label>
-            <input matInput [(ngModel)]="searchkey" (keyup)="applySearch(searchkey)">
+            <input matInput [(ngModel)]="searchkey" (ngModelChange)="this.userQuestionUpdate.next($event)">
             <mat-icon matSuffix (click)="clearSearch()">close</mat-icon>
+            <mat-hint>Enter more than 3 characters</mat-hint>
         </mat-form-field>
     </div>
     <div class="col-md-6" *ngIf="!searchkey">

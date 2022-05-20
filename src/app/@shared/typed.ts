@@ -11,10 +11,12 @@ export class PokemonDetailbyName {
     name: string;
     id: number;
     sprites: string;
-    constructor(name: string, id: number, sprites: {front_default: string;}) {
+    color: string;
+    constructor(name: string, id: number, sprites: {front_default: string;}, color: string) {
         this.name = name;
         this.id = id;
         this.sprites =  sprites.front_default;
+        this.color = color;
     }
 }
 
@@ -22,10 +24,12 @@ export class PokemonDetailLocalStorage {
     name: string;
     id: number;
     sprites: string;
-    constructor(name: string, id: number, sprites: string) {
+    color: string;
+    constructor(name: string, id: number, sprites: string, color: string) {
         this.name = name;
         this.id = id;
         this.sprites =  sprites;
+        this.color = color;
     }
 }
 
@@ -78,15 +82,6 @@ export class PokemonStats {
         this.name = name;
         this.id = id;
         this.game_index = game_index;
-    }
-}
-
-export class DemoModule {
-    name: string;
-    url: number;
-    constructor(name: string, url: number) {
-        this.name = name;
-        this.url = url;
     }
 }
 

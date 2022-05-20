@@ -9,7 +9,7 @@ import { Person } from 'src/app/@shared/typed';
 export class ParentComponent implements OnInit {
 
   public person: Person = {
-    name: 'Harish Mahadi'
+    name: 'Davis Warner'
   };
 
   public reassign(): void {

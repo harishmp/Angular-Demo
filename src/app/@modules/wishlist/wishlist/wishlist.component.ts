@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PokemonDetailLocalStorage } from 'src/app/@shared/typed';
+import { PokemonDetailbyName } from 'src/app/@shared/typed';
 import { Remove } from '../../dashboard/store/pokemon.actions';
 import { selectWishlist } from '../../dashboard/store/pokemon.reducer';
 
@@ -20,11 +20,11 @@ export class WishlistComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  redirecttoDetailPage(data: PokemonDetailLocalStorage){
+  redirecttoDetailPage(data: PokemonDetailbyName){
     this.router.navigate([`pokemon-detail-page/${data.id}`]);
   }
 
-  deletefromPersonallist($event: PokemonDetailLocalStorage) {
+  deletefromPersonallist($event: PokemonDetailbyName) {
     this.store.dispatch(Remove({ id: $event.id}));
     this._snackBar.open('Deleted from personal list', 'close', { duration: 2500 });
   }

@@ -4,3 +4,9 @@ mat-form-field {
 mat-icon {
     cursor: pointer;
 }
+.row {
+    background-color: #fff;
+}
+mat-hint {
+    color: red;
+}

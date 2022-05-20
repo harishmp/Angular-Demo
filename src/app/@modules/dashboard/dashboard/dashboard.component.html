@@ -4,7 +4,7 @@
             (onclickEventFilter)='applyfilter($event)'>
         </app-search>
     </div>
-    <lib-pokemon-card [filterkey]='filterkey' [dataList]='pokemonList' addedToWishlist='#d3c9c9'
+    <lib-pokemon-card [filterkey]='filterkey' [dataList]='pokemonList' [addedToWishlist]='color'
         (onclickEventredirect)='redirecttoDetailPage($event)' (onclickEventfirsticon)='addtoWishlist($event)'>
     </lib-pokemon-card>
     <div class="row" *ngIf="length > 10">
@@ -16,5 +16,6 @@
     </div>
 </div>
 <div class="row card shadow p-3 m-3" *ngIf="!pokemonList || pokemonList?.length == 0">
-    <h2 class="m-0">Loading!!!</h2>
+    <h2 class="m-0" *ngIf="!errorMessage">Loading!!!</h2>
+    <div class="m-0" *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>
