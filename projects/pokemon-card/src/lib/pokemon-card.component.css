@@ -2,7 +2,7 @@
     background-color: white;
 }
 mat-card {
-    max-width: 2px;
+    max-width: 248px;
 }
 mat-card-actions {
     min-height: 40px;
