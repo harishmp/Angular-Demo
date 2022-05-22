@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="pokemonWishList$ | async">
+<div class="container-fluid mt-2" *ngIf="pokemonWishList$ | async">
     <lib-pokemon-card [dataList]='pokemonWishList$ | async' (onclickEventredirect)='redirecttoDetailPage($event)'
         (onclickEventsecondicon)='deletefromPersonallist($event)'>
     </lib-pokemon-card>

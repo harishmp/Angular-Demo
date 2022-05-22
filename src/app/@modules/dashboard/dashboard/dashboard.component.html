@@ -7,7 +7,7 @@
     <lib-pokemon-card [filterkey]='filterkey' [dataList]='pokemonList' [addedToWishlist]='color'
         (onclickEventredirect)='redirecttoDetailPage($event)' (onclickEventfirsticon)='addtoWishlist($event)'>
     </lib-pokemon-card>
-    <div class="row" *ngIf="length > 10">
+    <div class="row" *ngIf="(length > 10) && !filterkey">
         <div class="card shadow col-md-12 p-0 mt-3">
             <mat-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
                 [pageSizeOptions]="pageSizeOptions" (page)="getServerData($event)">

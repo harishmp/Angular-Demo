@@ -37,7 +37,7 @@ export class WishlistComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
       this.store.dispatch(Remove({ id: $event.id }));
-      this._snackBar.open('Deleted from personal list', 'close', {
+      this._snackBar.open('Deleted item successfully', 'close', {
         duration: 2500,
       });
     });
